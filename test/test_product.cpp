@@ -1,32 +1,20 @@
 #include "catch.hpp"
 #include "product.h"
 
-TEST_CASE("getNameReturnsNameOfProduct", "[product]") {
-	Product testProduct;
-	testProduct.setName("soup");
-	REQUIRE(testProduct.getName() == "soup");
-}
+TEST_CASE("product member variables can be accessed and assigned", "[product]") {
+	Product testProduct("cereal", 499);
 
-TEST_CASE("setNameSetsNameOfProduct", "[product]") {
-	Product testProduct;
-	testProduct.setName("cereal");
 	REQUIRE(testProduct.getName() == "cereal");
-}
+	REQUIRE(testProduct.getPrice() == 499);
 
-TEST_CASE("getPriceReturnsPriceOfProductInCents", "[product]") {
-	Product testProduct;
-	testProduct.setPrice(824);
-	REQUIRE(testProduct.getPrice() == 824);
-}
+	SECTION("setName sets the name of a product") {
+		testProduct.setName("oatmeal");
 
-TEST_CASE("setPriceSetsPriceOfProductInCents", "[product]") {
-	Product testProduct;
-	testProduct.setPrice(421);
-	REQUIRE(testProduct.getPrice() == 421);
-}
+		REQUIRE(testProduct.getName() == "oatmeal");
+	}
+	SECTION("setPrice sets the price of a product") {
+		testProduct.setPrice(399);
 
-TEST_CASE("productParameterizedConstructorSetsMembers", "[product]") {
-	Product testProduct("milk", 512);
-	REQUIRE(testProduct.getName() == "milk");
-	REQUIRE(testProduct.getPrice() == 512);
+		REQUIRE(testProduct.getPrice() == 399);
+	}
 }
