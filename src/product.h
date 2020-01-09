@@ -10,6 +10,8 @@ private:
 	string name;
 	int price;
 public:
+	Product();
+	Product(string, int);
 	string getName() { return name; }
 	void setName(string n) { name = n; }
 	int getPrice() { return price; }

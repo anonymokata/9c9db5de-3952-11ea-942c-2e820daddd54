@@ -24,3 +24,9 @@ TEST_CASE("setPriceSetsPriceOfProductInCents", "[product]") {
 	testProduct.setPrice(421);
 	REQUIRE(testProduct.getPrice() == 421);
 }
+
+TEST_CASE("productParameterizedConstructorSetsMembers", "[product]") {
+	Product testProduct("milk", 512);
+	REQUIRE(testProduct.getName() == "milk");
+	REQUIRE(testProduct.getPrice() == 512);
+}
