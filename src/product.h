@@ -10,12 +10,11 @@ private:
 	string name;
 	int price;
 public:
-	Product();
 	Product(string, int);
-	string getName() { return name; }
-	void setName(string n) { name = n; }
-	int getPrice() { return price; }
-	void setPrice(int p) { price = p; }
+	inline string getName() { return name; }
+	inline void setName(string n) { name = n; }
+	inline int getPrice() { return price; }
+	inline void setPrice(int p) { price = p; }
 };
 
 #endif
