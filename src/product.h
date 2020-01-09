@@ -13,6 +13,7 @@ public:
 	string getName() { return name; }
 	void setName(string n) { name = n; }
 	int getPrice() { return price; }
+	void setPrice(int p) { price = p; }
 };
 
 #endif

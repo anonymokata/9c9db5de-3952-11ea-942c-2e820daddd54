@@ -18,3 +18,9 @@ TEST_CASE("getPriceReturnsPriceOfProductInCents", "[product]") {
 	testProduct.price = 824;
 	REQUIRE(testProduct.getPrice() == 824);
 }
+
+TEST_CASE("setPriceSetsPriceOfProductInCents", "[product]") {
+	Product testProduct;
+	testProduct.setPrice(421);
+	REQUIRE(testProduct.getPrice() == 421);
+}
