@@ -6,3 +6,9 @@ TEST_CASE("getNameReturnsNameOfProduct", "[product]") {
 	testProduct.name = "soup";
 	REQUIRE(testProduct.getName() == "soup");
 }
+
+TEST_CASE("setNameSetsNameOfProduct", "[product]") {
+	Product testProduct;
+	testProduct.setName("cereal");
+	REQUIRE(testProduct.getName() == "cereal");
+}

@@ -9,6 +9,7 @@ class Product {
 public:
 	string name;
 	string getName() { return name; }
+	void setName(string n) { name = n; }
 };
 
 #endif
