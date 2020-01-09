@@ -8,7 +8,7 @@ using std::string;
 class Product {
 public:
 	string name;
-	string getName() { return ""; }
+	string getName() { return name; }
 };
 
 #endif
