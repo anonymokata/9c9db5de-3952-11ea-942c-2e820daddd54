@@ -15,7 +15,7 @@ TEST_CASE("setNameSetsNameOfProduct", "[product]") {
 
 TEST_CASE("getPriceReturnsPriceOfProductInCents", "[product]") {
 	Product testProduct;
-	testProduct.price = 824;
+	testProduct.setPrice(824);
 	REQUIRE(testProduct.getPrice() == 824);
 }
 
