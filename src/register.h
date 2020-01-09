@@ -11,7 +11,7 @@ class Register {
 private:
 	unordered_map<string, int> quantity;
 public:
-	inline int getQuantity(string s) { return 0; }
+	inline int getQuantity(string s) { return quantity[s]; }
 	void scanItem(string);
 
 };
