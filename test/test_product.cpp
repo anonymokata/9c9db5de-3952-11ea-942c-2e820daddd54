@@ -3,7 +3,7 @@
 
 TEST_CASE("getNameReturnsNameOfProduct", "[product]") {
 	Product testProduct;
-	testProduct.name = "soup";
+	testProduct.setName("soup");
 	REQUIRE(testProduct.getName() == "soup");
 }
 

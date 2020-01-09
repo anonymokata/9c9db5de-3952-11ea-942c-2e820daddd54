@@ -6,8 +6,9 @@
 using std::string;
 
 class Product {
-public:
+private:
 	string name;
+public:
 	string getName() { return name; }
 	void setName(string n) { name = n; }
 };
