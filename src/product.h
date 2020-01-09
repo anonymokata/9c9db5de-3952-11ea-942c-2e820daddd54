@@ -9,8 +9,10 @@ class Product {
 private:
 	string name;
 public:
+	int price;
 	string getName() { return name; }
 	void setName(string n) { name = n; }
+	int getPrice() { return price; }
 };
 
 #endif

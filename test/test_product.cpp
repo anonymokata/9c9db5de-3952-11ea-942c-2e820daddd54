@@ -12,3 +12,9 @@ TEST_CASE("setNameSetsNameOfProduct", "[product]") {
 	testProduct.setName("cereal");
 	REQUIRE(testProduct.getName() == "cereal");
 }
+
+TEST_CASE("getPriceReturnsPriceOfProductInCents", "[product]") {
+	Product testProduct;
+	testProduct.price = 824;
+	REQUIRE(testProduct.getPrice() == 824);
+}
