@@ -17,6 +17,12 @@ bool Inventory::insert(shared_ptr<Product> p) {
 }
 
 shared_ptr<Product> Inventory::retrieve(string n) {
-	shared_ptr<Product> p = productList[n];
+	shared_ptr<Product> p;
+	if (contains(n)) {
+		p = productList[n];
+	}
+	else {
+		p = nullptr;
+	}
 	return p;
 }

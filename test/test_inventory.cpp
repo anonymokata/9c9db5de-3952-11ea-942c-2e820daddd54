@@ -39,12 +39,20 @@ TEST_CASE("insert adds a new product entry to the inventory product list if ther
 	}
 }
 
-TEST_CASE("retrieve returns a pointer to a product when passed a product name that is currently in the inventory") {
+TEST_CASE("retrieve takes a string and returns a pointer to a product with that string as a name if in inventory, else returns nullptr", "[inventory]") {
 	Inventory testInventory;
 	testInventory.insert(make_shared<Product>("ice cream", 359));
 	shared_ptr<Product> testProductPtr = testInventory.retrieve("ice cream");
 
-	REQUIRE(testProductPtr != nullptr);
-	REQUIRE(testProductPtr->getName() == "ice cream");
-	REQUIRE(testProductPtr->getPrice() == 359);
+	SECTION("retrieve returns a pointer to a product when passed a product name that is currently in the inventory") {
+		REQUIRE(testProductPtr != nullptr);
+		REQUIRE(testProductPtr->getName() == "ice cream");
+		REQUIRE(testProductPtr->getPrice() == 359);
+	}
+
+	SECTION("retrieve returns a nullptr when passed a string that isn't a product name in the inventory") {
+		testProductPtr = testInventory.retrieve("lettuce");
+
+		REQUIRE(testProductPtr == nullptr);
+	}
 }
