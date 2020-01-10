@@ -19,19 +19,24 @@ TEST_CASE("assignInventory assigns an inventory object to the register", "[regis
 	REQUIRE(testRegister.getInventory());
 }
 
-TEST_CASE("scanItem returns false if no inventory object is currently set", "[register]") {
+TEST_CASE("scanItem is passed a product name, increases quantity of product and total cost if product is in register's set inventory, and returns a bool as an indicator of success/fail", "[register]") {
 	Register testRegister;
 
-	REQUIRE(testRegister.scanItem("corn") == false);
-}
+	SECTION("scanItem returns false if no inventory object is currently set", "[register]") {
+		REQUIRE(testRegister.scanItem("corn") == false);
+	}
 
-TEST_CASE("scanItem returns true if inventory object is set and product is found in inventory", "[register]") {
-	Register testRegister;
 	shared_ptr<Inventory> testInventoryPointer = make_shared<Inventory>();
 	testInventoryPointer->insert(make_shared<Product>("beef", 799));
 	testRegister.assignInventory(testInventoryPointer);
 
-	REQUIRE(testRegister.scanItem("beef") == true);
+	SECTION("scanItem returns true if inventory object is set and product is found in inventory", "[register]") {
+		REQUIRE(testRegister.scanItem("beef") == true);
+	}
+
+	SECTION("scanItem returns false if inventory object is set and product is not found in inventory", "[register]") {
+		REQUIRE(testRegister.scanItem("chips") == false);
+	}
 }
 
 /*TEST_CASE("scanItem increases the quantity of the product in register object if product is found in register's inventory", "[register]") {

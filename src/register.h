@@ -1,6 +1,8 @@
 #ifndef _REGISTER_H_
 #define _REGISTER_H_
 
+#include "inventory.h"
+
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -8,8 +10,6 @@
 using std::shared_ptr;
 using std::string;
 using std::unordered_map;
-
-class Inventory;
 
 class Register {
 private:
