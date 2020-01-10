@@ -9,5 +9,5 @@ bool Inventory::contains(string n) {
 }
 
 void Inventory::insert(Product* p) {
-	return;
+	productList[p->getName()] = p;
 }

@@ -1,13 +1,13 @@
 #ifndef _INVENTORY_H_
 #define _INVENTORY_H_
 
+#include "product.h"
+
 #include <string>
 #include <unordered_map>
 
 using std::string;
 using std::unordered_map;
-
-class Product;
 
 class Inventory {
 public:
