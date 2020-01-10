@@ -23,3 +23,14 @@ TEST_CASE("insert inserts a reference to a product object inside the inventory o
 
 	REQUIRE(testInventory.contains("pasta") == true);
 }
+
+TEST_CASE("insert returns a value of true when a product is sucessfully inserted") {
+	Inventory testInventory;
+	
+	REQUIRE(testInventory.contains("apple") == false);
+
+	bool res = testInventory.insert(new Product("apple", 299));
+
+	REQUIRE(testInventory.contains("apple") == true);
+	REQUIRE(res == true);
+}

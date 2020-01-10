@@ -13,7 +13,7 @@ class Inventory {
 public:
 	unordered_map<string, Product*> productList;
 	bool contains(string);
-	void insert(Product*);
+	bool insert(Product*);
 };
 
 #endif
