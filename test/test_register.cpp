@@ -37,14 +37,10 @@ TEST_CASE("scanItem is passed a product name, increases quantity of product and 
 	SECTION("scanItem returns false if inventory object is set and product is not found in inventory", "[register]") {
 		REQUIRE(testRegister.scanItem("chips") == false);
 	}
+
+	SECTION("scanItem increases the quantity of the product in register's quantity object if product is found in register's inventory", "[register]") {
+		testRegister.scanItem("beef");
+		
+		REQUIRE(testRegister.getQuantity("beef") == 1);
+	}
 }
-
-/*TEST_CASE("scanItem increases the quantity of the product in register object if product is found in register's inventory", "[register]") {
-	Register testRegister;
-	Inventory testInventory;
-	testInventory.insert(shared_ptr<Product>("coffee", 719));
-	testRegister.assignInventory(testInventory&);
-	testRegister.scanItem("coffee");
-
-	REQUIRE(testRegister.getQuantity("coffee") == 1);
-}*/

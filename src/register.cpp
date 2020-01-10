@@ -9,8 +9,8 @@ bool Register::scanItem(string s) {
 		return false;
 	}
 	if (this->productList->contains(s)) {
+		++quantity[s];
 		return true;
-
 	}
 	return false;
 }
