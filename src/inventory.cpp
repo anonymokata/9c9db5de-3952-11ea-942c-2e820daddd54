@@ -8,7 +8,7 @@ bool Inventory::contains(string n) {
 	return true;
 }
 
-bool Inventory::insert(Product* p) {
+bool Inventory::insert(shared_ptr<Product> p) {
 	if (this->contains(p->getName())) {
 		return false;
 	}
