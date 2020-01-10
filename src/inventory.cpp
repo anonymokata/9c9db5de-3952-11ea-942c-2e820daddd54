@@ -7,3 +7,7 @@ bool Inventory::contains(string n) {
 	}
 	return true;
 }
+
+void Inventory::insert(Product* p) {
+	return;
+}

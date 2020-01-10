@@ -17,9 +17,9 @@ TEST_CASE("contains returns a value based on the state of productList", "[invent
 	}
 }
 
-/*TEST_CASE("insert inserts a reference to a product object inside the inventory object for access", "[inventory]") {
+TEST_CASE("insert inserts a reference to a product object inside the inventory object for access", "[inventory]") {
 	Inventory testInventory;
-	testInventory.insert(Product("rice", 289));
+	testInventory.insert(new Product("pasta", 499));
 
-	REQUIRE(testInventory.contains("rice") == true);
-}*/
+	REQUIRE(testInventory.contains("pasta") == true);
+}
