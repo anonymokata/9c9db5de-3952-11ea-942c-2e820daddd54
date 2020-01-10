@@ -11,9 +11,9 @@ private:
 	int price;
 public:
 	Product(string, int);
-	inline string getName() { return name; }
-	inline void setName(string n) { name = n; }
-	inline int getPrice() { return price; }
+	inline string getName() const { return name; }
+	inline void setName(const string& n) { name = n; }
+	inline int getPrice() const { return price; }
 	inline void setPrice(int p) { price = p; }
 };
 

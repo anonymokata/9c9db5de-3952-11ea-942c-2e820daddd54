@@ -10,8 +10,9 @@ using std::string;
 using std::unordered_map;
 
 class Inventory {
-public:
+private:
 	unordered_map<string, Product*> productList;
+public:
 	bool contains(string);
 	bool insert(Product*);
 };
