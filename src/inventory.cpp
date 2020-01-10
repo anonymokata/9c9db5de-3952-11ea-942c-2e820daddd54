@@ -9,6 +9,9 @@ bool Inventory::contains(string n) {
 }
 
 bool Inventory::insert(Product* p) {
+	if (this->contains(p->getName())) {
+		return false;
+	}
 	productList[p->getName()] = p;
 	return true;
 }

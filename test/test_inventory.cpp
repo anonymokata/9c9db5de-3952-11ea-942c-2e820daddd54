@@ -24,7 +24,7 @@ TEST_CASE("insert inserts a reference to a product object inside the inventory o
 	REQUIRE(testInventory.contains("pasta") == true);
 }
 
-TEST_CASE("insert returns a value of true when a product is sucessfully inserted") {
+TEST_CASE("insert returns a value of true when a product is successfully inserted") {
 	Inventory testInventory;
 	
 	REQUIRE(testInventory.contains("apple") == false);
@@ -33,4 +33,15 @@ TEST_CASE("insert returns a value of true when a product is sucessfully inserted
 
 	REQUIRE(testInventory.contains("apple") == true);
 	REQUIRE(res == true);
+}
+
+TEST_CASE("insert returns a value of false when a product is attempted to be inserted but already has an entry with the same name", "[inventory]") {
+	Inventory testInventory;
+	testInventory.insert(new Product("water", 185));
+	
+	REQUIRE(testInventory.contains("water") == true);
+
+	bool res = testInventory.insert(new Product("water", 165));
+
+	REQUIRE(res == false);
 }
