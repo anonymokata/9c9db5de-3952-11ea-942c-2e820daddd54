@@ -43,4 +43,12 @@ TEST_CASE("scanItem is passed a product name, increases quantity of product and 
 		
 		REQUIRE(testRegister.getQuantity("beef") == 1);
 	}
+
+/*	SECTION("scanItem increases the total of the register by the price of the scanned product", "[register]") {
+		REQUIRE(testRegister.getTotal() == 0);
+
+		testRegister.scanItem("beef");
+
+		REQUIRE(testRegister.getTotal() == 799);
+	}*/
 }

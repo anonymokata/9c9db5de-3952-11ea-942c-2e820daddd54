@@ -17,6 +17,7 @@ private:
 public:
 	bool contains(string);
 	bool insert(shared_ptr<Product>);
+	shared_ptr<Product> retrieve(string);
 };
 
 #endif

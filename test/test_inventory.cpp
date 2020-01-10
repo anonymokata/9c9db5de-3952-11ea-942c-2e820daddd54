@@ -4,6 +4,7 @@
 
 #include <memory>
 
+using std::make_shared;
 using std::shared_ptr;
 
 TEST_CASE("contains returns a value based on the state of productList", "[inventory]") {
@@ -36,4 +37,14 @@ TEST_CASE("insert adds a new product entry to the inventory product list if ther
 
 		REQUIRE(res == false);
 	}
+}
+
+TEST_CASE("retrieve returns a pointer to a product when passed a product name that is currently in the inventory") {
+	Inventory testInventory;
+	testInventory.insert(make_shared<Product>("ice cream", 359));
+	shared_ptr<Product> testProductPtr = testInventory.retrieve("ice cream");
+
+	REQUIRE(testProductPtr != nullptr);
+	REQUIRE(testProductPtr->getName() == "ice cream");
+	REQUIRE(testProductPtr->getPrice() == 359);
 }

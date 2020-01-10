@@ -15,3 +15,8 @@ bool Inventory::insert(shared_ptr<Product> p) {
 	productList[p->getName()] = p;
 	return true;
 }
+
+shared_ptr<Product> Inventory::retrieve(string n) {
+	shared_ptr<Product> p = productList[n];
+	return p;
+}

@@ -10,7 +10,12 @@ bool Register::scanItem(string s) {
 	}
 	if (this->productList->contains(s)) {
 		++quantity[s];
+//		incTotal(productList
 		return true;
 	}
 	return false;
+}
+
+void Register::incTotal(int p) {
+	total += p;
 }

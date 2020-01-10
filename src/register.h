@@ -13,14 +13,16 @@ using std::unordered_map;
 
 class Register {
 private:
+	int total;
 	unordered_map<string, int> quantity;
 	shared_ptr<Inventory> productList = nullptr;
 public:
+	inline int getTotal() const { return total; }
 	inline shared_ptr<Inventory> getInventory() { return productList; }
 	void assignInventory(shared_ptr<Inventory>);
 	inline int getQuantity(string s) { return quantity[s]; }
 	bool scanItem(string);
-
+	void incTotal(int);
 };
 
 #endif
