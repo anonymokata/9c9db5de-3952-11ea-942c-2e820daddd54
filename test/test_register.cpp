@@ -18,6 +18,12 @@ TEST_CASE("assignInventory assigns an inventory object to the register", "[regis
 	REQUIRE(testRegister.getInventory());
 }
 
+TEST_CASE("scanItem returns false if no inventory object is currently set", "[register]") {
+	Register testRegister;
+
+	REQUIRE(testRegister.scanItem("corn") == false);
+}
+
 /*TEST_CASE("scanItem increases the quantity of the product in register object if product is found in register's inventory", "[register]") {
 	Register testRegister;
 	Inventory testInventory;

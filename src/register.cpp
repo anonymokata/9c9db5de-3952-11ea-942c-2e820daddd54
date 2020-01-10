@@ -4,6 +4,9 @@ void Register::assignInventory(shared_ptr<Inventory> i) {
 	productList = i;
 }
 
-void Register::scanItem(string s) {
-	++quantity[s];
+bool Register::scanItem(string s) {
+	if (!this->productList) {
+		return false;
+	}
+	return true;
 }

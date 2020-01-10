@@ -19,7 +19,7 @@ public:
 	inline shared_ptr<Inventory> getInventory() { return productList; }
 	void assignInventory(shared_ptr<Inventory>);
 	inline int getQuantity(string s) { return quantity[s]; }
-	void scanItem(string);
+	bool scanItem(string);
 
 };
 
