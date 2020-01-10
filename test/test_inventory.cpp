@@ -2,17 +2,19 @@
 #include "inventory.h"
 #include "product.h"
 
-TEST_CASE("contains returns true when passed a product name in the inventory container", "[inventory]") {
+TEST_CASE("contains returns a value based on the state of productList", "[inventory]") {
 	Inventory testInventory;
 	testInventory.productList["rice"] = new Product("rice", 289);
 
-	REQUIRE(testInventory.contains("rice") == true);
-}
+	SECTION("contains returns true when passed a product name in the inventory container") {
 
-TEST_CASE("contains returns false when passed a product name not in the inventory container", "[inventory]") {
-	Inventory testInventory;
+		REQUIRE(testInventory.contains("rice") == true);
+	}
+
+	SECTION("contains returns false when passed a product name not in the inventory container", "[inventory]") {
 	
-	REQUIRE(testInventory.contains("coke") == false);
+		REQUIRE(testInventory.contains("coke") == false);
+	}
 }
 
 /*TEST_CASE("insert inserts a reference to a product object inside the inventory object for access", "[inventory]") {
