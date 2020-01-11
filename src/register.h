@@ -22,6 +22,7 @@ private:
 	int calcPrice(int, int);
 	void incTotal(int);
 	void incQuantity(string, int = 0);
+	void decQuantity(string);
 public:
 	inline int getTotal() const { return total; }
 	inline shared_ptr<Inventory> getInventory() { return productList; }

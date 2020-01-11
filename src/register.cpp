@@ -42,6 +42,7 @@ bool Register::removeItem(string n) {
 	if (getQuantity(n) == 0) {
 		return false;
 	}
+	decQuantity(n);
 	return true;
 }
 
@@ -67,4 +68,8 @@ void Register::incQuantity(string n, int w) {
 	else {
 		quantity[n] += w;
 	}
+}
+
+void Register::decQuantity(string n) {
+	--quantity[n];
 }
