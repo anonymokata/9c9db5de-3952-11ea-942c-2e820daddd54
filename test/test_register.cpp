@@ -10,7 +10,7 @@ using std::shared_ptr;
 
 TEST_CASE("assignInventory assigns an inventory object to the register", "[register]") {
 	Register testRegister;
-	shared_ptr<Inventory> testInventoryPointer = std::make_shared<Inventory>();
+	shared_ptr<Inventory> testInventoryPointer = make_shared<Inventory>();
 
 	REQUIRE(!testRegister.getInventory());
 

@@ -1,8 +1,11 @@
-output: test_main.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o
-	g++ -std=c++11 -Wall -Werror test_main.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o -o output
+output: test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o
+	g++ -std=c++11 -Wall -Werror test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o -o output
 
 test_main.o: test/test_main.cpp
 	g++ -std=c++11 -Wall -Werror -c test/test_main.cpp -I lib/catch2
+
+test_use_cases.o: test/test_use_cases.cpp
+	g++ -std=c++11 -Wall -Werror -c test/test_use_cases.cpp -I lib/catch2 -I src/
 
 test_product.o: test/test_product.cpp
 	g++ -std=c++11 -Wall -Werror -c test/test_product.cpp -I lib/catch2 -I src/

@@ -13,7 +13,7 @@ using std::unordered_map;
 
 class Register {
 private:
-	int total;
+	int total = 0;
 	unordered_map<string, int> quantity;
 	shared_ptr<Inventory> productList = nullptr;
 public:
