@@ -38,6 +38,13 @@ bool Register::scanItem(string s, int w) {
 	return false;
 }
 
+bool Register::removeItem(string n) {
+	if (getQuantity(n) == 0) {
+		return false;
+	}
+	return true;
+}
+
 int Register::calcPrice(int p, int w) {
 	if (w != 0) { //multiply price per pound by quantity in
 		//hundredths of a pound
