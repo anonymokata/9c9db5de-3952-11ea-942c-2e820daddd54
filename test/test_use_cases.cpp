@@ -15,28 +15,38 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	
-	REQUIRE(testRegister.getTotal() == 0);
-	REQUIRE(testRegister.getQuantity("tea") == 0);
-	REQUIRE(testRegister.getQuantity("chips") == 0);
+	SECTION("register total and quantities initialize as 0") {
+		REQUIRE(testRegister.getTotal() == 0);
+		REQUIRE(testRegister.getQuantity("tea") == 0);
+		REQUIRE(testRegister.getQuantity("chips") == 0);
+	}
 
 	testRegister.scanItem("tea");
 
-	REQUIRE(testRegister.getTotal() == 299);
-	REQUIRE(testRegister.getQuantity("tea") == 1);
+	SECTION("scanning an item increases the total and quantity") {
+		REQUIRE(testRegister.getTotal() == 299);
+		REQUIRE(testRegister.getQuantity("tea") == 1);
+	}
 
 	testRegister.scanItem("chips");
-
-	REQUIRE(testRegister.getTotal() == 299 + 185);
-	REQUIRE(testRegister.getQuantity("chips") == 1);
-
 	
+	SECTION("repeated scanning keeps a running total and quantity of each item") {
+		REQUIRE(testRegister.getTotal() == 299 + 185);
+		REQUIRE(testRegister.getQuantity("chips") == 1);
+	}
+
 	testRegister.removeItem("tea");
 
-	REQUIRE(testRegister.getTotal() == 185);
-	REQUIRE(testRegister.getQuantity("tea") == 0);
+	SECTION("removing an item not priced by weight reduces the total by one unit and quantity by one") {
+		REQUIRE(testRegister.getTotal() == 185);
+		REQUIRE(testRegister.getQuantity("tea") == 0);
+	}
 
 	testRegister.removeItem("tea");
+	
+	SECTION("removing an item which has a current quantity of 0 does not affect the total or quantity") {
+		REQUIRE(testRegister.getTotal() == 185);
+		REQUIRE(testRegister.getQuantity("tea") == 0);
 
-	REQUIRE(testRegister.getTotal() == 185);
-	REQUIRE(testRegister.getQuantity("tea") == 0);
+	}
 }
