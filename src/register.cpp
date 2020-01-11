@@ -46,6 +46,9 @@ bool Register::removeItem(string n, int w) {
 	if (prodPtr->getByWeight() && w == 0) {
 		return false;
 	}
+	if (prodPtr->getByWeight() == false) {
+		w = 0;
+	}
 	decTotal(calcPrice(prodPtr->getPrice(), w));
 	decQuantity(n);
 	return true;
