@@ -8,7 +8,8 @@ using std::string;
 class Product {
 private:
 	string name;
-	int price;
+	int price; //if byWeight true, represents price per pound
+		//else, represents price per unit
 	bool byWeight = false;
 public:
 	Product(string, int);

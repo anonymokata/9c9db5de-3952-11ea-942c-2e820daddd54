@@ -51,3 +51,13 @@ TEST_CASE("scanItem is passed a product name, increases quantity of product and 
 		REQUIRE(testRegister.getTotal() == curTotal + 799);
 	}
 }
+
+TEST_CASE("scanItem accepts an additional second parameter indicating the weight of the product being scanned in", "[register]") {
+	shared_ptr<Inventory> testInventoryPtr = make_shared<Inventory>();
+	testInventoryPtr->insert(make_shared<Product>("ham", 376, true));
+	Register testRegister;
+	testRegister.assignInventory(testInventoryPtr);
+	testRegister.scanItem("ham", 110);
+
+	REQUIRE(testRegister.getTotal() == (int) (376 * (110.0 / 100) +.5));
+}
