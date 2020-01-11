@@ -96,4 +96,11 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 	
 		REQUIRE(res == false);
 	}
+
+	SECTION("removeItem returns true if passed product has a quantity above 0") {
+		testRegister.scanItem("milk");
+		bool res = testRegister.removeItem("milk");
+
+		REQUIRE(res == true);
+	}
 }
