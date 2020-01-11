@@ -8,7 +8,7 @@
 using std::make_shared;
 using std::shared_ptr;
 
-TEST_CASE("after configuring an inventory with products, a register repeatedly accepts scanned items and keeps an accurate running total", "[inventory][product][register]") {
+TEST_CASE("after configuring an inventory with products, a register repeatedly allows scanning items, removing items, and keeps an accurate running total", "[inventory][product][register]") {
 	shared_ptr<Inventory> testInventoryPtr = make_shared<Inventory>();
 	testInventoryPtr->insert(make_shared<Product>("tea", 299));
 	testInventoryPtr->insert(make_shared<Product>("chips", 185));
@@ -28,4 +28,15 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 
 	REQUIRE(testRegister.getTotal() == 299 + 185);
 	REQUIRE(testRegister.getQuantity("chips") == 1);
+
+	
+	testRegister.removeItem("tea");
+
+	REQUIRE(testRegister.getTotal() == 185);
+	REQUIRE(testRegister.getQuantity("tea") == 0);
+
+	testRegister.removeItem("tea");
+
+	REQUIRE(testRegister.getTotal() == 185);
+	REQUIRE(testRegister.getQuantity("tea") == 0);
 }
