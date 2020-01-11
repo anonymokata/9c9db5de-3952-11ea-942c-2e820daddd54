@@ -22,9 +22,13 @@ bool Register::scanItem(string s, int w) {
 		return false;
 	}
 	if (this->productList->contains(s)) {
-		incQuantity(s, w);
 		shared_ptr<Product> prodPtr = productList->retrieve(s);
+		if (prodPtr->getByWeight() && w == 0) {
+			//weighted object scanned without weight
+			return false;
+		}
 		incTotal(calcPrice(prodPtr->getPrice(), w));
+		incQuantity(s, w);
 		return true;
 	}
 	return false;

@@ -55,6 +55,7 @@ TEST_CASE("scanItem is passed a product name, increases quantity of product and 
 TEST_CASE("scanItem accepts an additional second parameter indicating the weight of the product being scanned in", "[register]") {
 	shared_ptr<Inventory> testInventoryPtr = make_shared<Inventory>();
 	testInventoryPtr->insert(make_shared<Product>("ham", 376, true));
+	testInventoryPtr->insert(make_shared<Product>("chocolate", 199));
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	testRegister.scanItem("ham", 110);
@@ -65,5 +66,11 @@ TEST_CASE("scanItem accepts an additional second parameter indicating the weight
 
 	SECTION("scanItem increases quantity for weighed items based on weight of product scanned") {
 		REQUIRE(testRegister.getQuantity("ham") == 110);
+	}
+
+	SECTION("scanItem returns false if weighed product is entered without weight") {
+		bool res = testRegister.scanItem("ham");
+		
+		REQUIRE(res == false);
 	}
 }
