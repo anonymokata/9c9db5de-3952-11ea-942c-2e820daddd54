@@ -21,6 +21,7 @@ private:
 
 	int calcPrice(int, int);
 	void incTotal(int);
+	void decTotal(int);
 	void incQuantity(string, int = 0);
 	void decQuantity(string);
 public:
