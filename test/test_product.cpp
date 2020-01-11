@@ -22,4 +22,17 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 		
 		REQUIRE(testProduct2.getByWeight() == true);
 	}
+	SECTION("setByWeight sets the byWeight member") {
+		Product testProduct2("banana", 299);
+
+		REQUIRE(testProduct2.getByWeight() == false);
+
+		testProduct2.setByWeight(true);
+
+		REQUIRE(testProduct2.getByWeight() == true);
+
+		testProduct2.setByWeight(false);
+
+		REQUIRE(testProduct2.getByWeight() == false);
+	}
 }

@@ -18,7 +18,7 @@ public:
 	inline int getPrice() const { return price; }
 	inline void setPrice(int p) { price = p; }
 	inline bool getByWeight() const { return byWeight; }
-	inline void setByWeight() { }
+	inline void setByWeight(bool w) { byWeight = w; }
 };
 
 #endif
