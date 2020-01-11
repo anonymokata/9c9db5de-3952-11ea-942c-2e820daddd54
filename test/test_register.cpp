@@ -139,6 +139,8 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		REQUIRE(res == false);
 	}
 
+//	SECTION("removeItem returns false if passed product is passed by weight and weight passed is greater than amount in productList")
+
 	SECTION("removeItem decreases quantity of product by passed weight amount if product is priced by weight") {
 		testRegister.scanItem("watermelon", 313);
 		int quantity = testRegister.getQuantity("watermelon");
@@ -147,7 +149,11 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		REQUIRE(testRegister.getQuantity("watermelon") == quantity - 107);
 	}
 
-	//SECTION("removeItem decreases total by adjusted price if passed product is priced by weight and a weight amount is passed") {
-		//testRegister.scanItem("watermelon", 509);
-		
+	SECTION("removeItem decreases total by adjusted price if passed product is priced by weight and a weight amount is passed") {
+		testRegister.scanItem("watermelon", 509);
+		int tot = testRegister.getTotal();
+		testRegister.removeItem("watermelon", 216);
+
+		REQUIRE(testRegister.getTotal() == tot - (int) (50 * (216 / 100.0) + .5));
+	}		
 }
