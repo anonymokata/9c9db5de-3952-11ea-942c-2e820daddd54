@@ -39,11 +39,17 @@ bool Register::scanItem(string s, int w) {
 }
 
 bool Register::removeItem(string n, int w) {
-	if (getQuantity(n) == 0) {
+	shared_ptr<Product> prodPtr = productList->retrieve(n);
+	if (prodPtr->getByWeight() && w > getQuantity(n)) {
+		//trying to remove more pounds than currently have
 		return false;
 	}
-	shared_ptr<Product> prodPtr = productList->retrieve(n);
+	else if (getQuantity(n) == 0) {
+		//trying to remove product not currently scanned
+		return false;
+	}
 	if (prodPtr->getByWeight() && w == 0) {
+		//trying to remove weighted item without passing weight
 		return false;
 	}
 	if (prodPtr->getByWeight() == false) {

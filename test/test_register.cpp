@@ -139,7 +139,13 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		REQUIRE(res == false);
 	}
 
-//	SECTION("removeItem returns false if passed product is passed by weight and weight passed is greater than amount in productList")
+	SECTION("removeItem returns false if passed product is priced by weight and weight passed is greater than amount in productList") {
+		testRegister.scanItem("watermelon", 513);
+		int quant = testRegister.getQuantity("watermelon");
+		bool res = testRegister.removeItem("watermelon", quant + 100);
+
+		REQUIRE(res == false);
+	}
 
 	SECTION("removeItem decreases quantity of product by passed weight amount if product is priced by weight") {
 		testRegister.scanItem("watermelon", 313);
