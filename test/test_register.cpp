@@ -73,4 +73,14 @@ TEST_CASE("scanItem accepts an additional second parameter indicating the weight
 		
 		REQUIRE(res == false);
 	}
+
+	SECTION("scanItem ignores weight parameter if scanned product is entered with weight and product's byWeight is false") {
+		int quan = testRegister.getQuantity("chocolate");
+		int tot = testRegister.getTotal();
+		bool res = testRegister.scanItem("chocolate");
+
+		REQUIRE(testRegister.getQuantity("chocolate") == quan + 1);
+		REQUIRE(testRegister.getTotal() == tot + 199);
+		REQUIRE(res == true);
+	}
 }
