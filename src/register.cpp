@@ -22,7 +22,7 @@ bool Register::scanItem(string s, int w) {
 		return false;
 	}
 	if (this->productList->contains(s)) {
-		++quantity[s];
+		incQuantity(s, w);
 		shared_ptr<Product> prodPtr = productList->retrieve(s);
 		incTotal(calcPrice(prodPtr->getPrice(), w));
 		return true;

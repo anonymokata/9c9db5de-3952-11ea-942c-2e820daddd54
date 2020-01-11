@@ -58,6 +58,12 @@ TEST_CASE("scanItem accepts an additional second parameter indicating the weight
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	testRegister.scanItem("ham", 110);
+	
+	SECTION("scanItem increases total for weighed items based on weight of product scanned") {
+		REQUIRE(testRegister.getTotal() == (int) (376 * (110.0 / 100) +.5));
+	}
 
-	REQUIRE(testRegister.getTotal() == (int) (376 * (110.0 / 100) +.5));
+	SECTION("scanItem increases quantity for weighed items based on weight of product scanned") {
+		REQUIRE(testRegister.getQuantity("ham") == 110);
+	}
 }
