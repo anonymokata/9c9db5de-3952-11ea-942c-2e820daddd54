@@ -14,14 +14,18 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	testInventoryPtr->insert(make_shared<Product>("chips", 185));
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
-
+	
 	REQUIRE(testRegister.getTotal() == 0);
+	REQUIRE(testRegister.getQuantity("tea") == 0);
+	REQUIRE(testRegister.getQuantity("chips") == 0);
 
 	testRegister.scanItem("tea");
 
 	REQUIRE(testRegister.getTotal() == 299);
+	REQUIRE(testRegister.getQuantity("tea") == 1);
 
 	testRegister.scanItem("chips");
 
 	REQUIRE(testRegister.getTotal() == 299 + 185);
+	REQUIRE(testRegister.getQuantity("chips") == 1);
 }
