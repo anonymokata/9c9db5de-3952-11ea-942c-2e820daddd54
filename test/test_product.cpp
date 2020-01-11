@@ -17,4 +17,9 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 
 		REQUIRE(testProduct.getPrice() == 399);
 	}
+	SECTION("product constructor takes an optional third boolean parameter byWeight") {
+		Product testProduct2("80 lean ground beef", 599, true);
+		
+		REQUIRE(testProduct2.getByWeight() == true);
+	}
 }
