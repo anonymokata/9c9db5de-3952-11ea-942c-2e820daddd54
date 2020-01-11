@@ -12,6 +12,7 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	shared_ptr<Inventory> testInventoryPtr = make_shared<Inventory>();
 	testInventoryPtr->insert(make_shared<Product>("tea", 299));
 	testInventoryPtr->insert(make_shared<Product>("chips", 185));
+	testInventoryPtr->insert(make_shared<Product>("chicken", 499, true));
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	
@@ -47,6 +48,12 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("removing an item which has a current quantity of 0 does not affect the total or quantity") {
 		REQUIRE(testRegister.getTotal() == 185);
 		REQUIRE(testRegister.getQuantity("tea") == 0);
-
+	}
+		
+	testRegister.scanItem("chicken", 147);
+	
+	SECTION("scanning an item priced by weight increases quantity and total by amount of product scanned") {
+		REQUIRE(testRegister.getTotal() == 185 + (int) ((147/100.0) * 499 + .5));
+		REQUIRE(testRegister.getQuantity("chicken") == 147);
 	}
 }
