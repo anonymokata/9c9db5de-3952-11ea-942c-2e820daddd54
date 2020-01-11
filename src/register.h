@@ -29,7 +29,7 @@ public:
 	void assignInventory(shared_ptr<Inventory>);
 	inline int getQuantity(string s) { return quantity[s]; }
 	bool scanItem(string, int = 0);
-	bool removeItem(string);
+	bool removeItem(string, int = 0);
 };
 
 #endif

@@ -38,8 +38,12 @@ bool Register::scanItem(string s, int w) {
 	return false;
 }
 
-bool Register::removeItem(string n) {
+bool Register::removeItem(string n, int w) {
 	if (getQuantity(n) == 0) {
+		return false;
+	}
+	shared_ptr<Product> prodPtr = productList->retrieve(n);
+	if (prodPtr->getByWeight() && w == 0) {
 		return false;
 	}
 	decQuantity(n);

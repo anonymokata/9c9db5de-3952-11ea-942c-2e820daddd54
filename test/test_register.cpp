@@ -88,6 +88,7 @@ TEST_CASE("scanItem accepts an additional second parameter indicating the weight
 TEST_CASE("removeItem removes a product from the register and reduces the total by the corresponding amount", "[register]") {
 	shared_ptr<Inventory> testInventoryPtr = make_shared<Inventory>();
 	testInventoryPtr->insert(make_shared<Product>("milk", 799));
+	testInventoryPtr->insert(make_shared<Product>("watermelon", 50, true));
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	
@@ -110,5 +111,12 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		testRegister.removeItem("milk");
 
 		REQUIRE(testRegister.getQuantity("milk") == milkQuantity - 1);
+	}
+
+	SECTION("removeItem returns false if passed product is priced by weight and no weight is passed") {
+		testRegister.scanItem("watermelon", 207);
+		bool res = testRegister.removeItem("watermelon");
+
+		REQUIRE(res == false);
 	}
 }
