@@ -23,7 +23,7 @@ private:
 	void incTotal(int);
 	void decTotal(int);
 	void incQuantity(string, int = 0);
-	void decQuantity(string);
+	void decQuantity(string, int = 0);
 public:
 	inline int getTotal() const { return total; }
 	inline shared_ptr<Inventory> getInventory() { return productList; }

@@ -50,7 +50,7 @@ bool Register::removeItem(string n, int w) {
 		w = 0;
 	}
 	decTotal(calcPrice(prodPtr->getPrice(), w));
-	decQuantity(n);
+	decQuantity(n, w);
 	return true;
 }
 
@@ -82,6 +82,11 @@ void Register::incQuantity(string n, int w) {
 	}
 }
 
-void Register::decQuantity(string n) {
-	--quantity[n];
+void Register::decQuantity(string n, int w) {
+	if (w == 0) {
+		--quantity[n];
+	}
+	else {
+		quantity[n] -= w;
+	}
 }
