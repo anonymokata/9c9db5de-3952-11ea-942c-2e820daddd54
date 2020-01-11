@@ -65,4 +65,13 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 		REQUIRE(testRegister.getTotal() == total - (int) ((32/100.0) * 499 + .5));
 		REQUIRE(testRegister.getQuantity("chicken") == chickenQuantity - 32);
 	}
+
+	total = testRegister.getTotal();
+	chickenQuantity = testRegister.getQuantity("chicken");
+	testRegister.removeItem("chicken", 600);
+
+	SECTION("attempting to remove more of a weight priced item than currently in quantity results in no change to total or quantity") {
+		REQUIRE(testRegister.getTotal() == total);
+		REQUIRE(testRegister.getQuantity("chicken") == chickenQuantity);
+	}
 }
