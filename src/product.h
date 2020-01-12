@@ -22,7 +22,7 @@ public:
 	inline bool getByWeight() const { return byWeight; }
 	inline void setByWeight(bool w) { byWeight = w; }
 	inline int getMarkdown() const { return markdown; }
-	inline void setMarkdown(int m) { markdown = m; }
+	bool setMarkdown(int);
 };
 
 #endif
