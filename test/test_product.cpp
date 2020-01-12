@@ -41,4 +41,10 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 		REQUIRE(res == true);
 		REQUIRE(testProduct.getMarkdown() == 89);
 	}
+	SECTION("setMarkdown returns false and does not set the markdown member if passed value is greater than or equal to current price") {
+		bool res = testProduct.setMarkdown(700);
+
+		REQUIRE(res == false);
+		REQUIRE(testProduct.getMarkdown() == 0);
+	}
 }

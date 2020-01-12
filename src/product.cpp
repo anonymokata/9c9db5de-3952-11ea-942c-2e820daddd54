@@ -12,6 +12,9 @@ Product::Product(string n, int p, bool w) {
 }
 
 bool Product::setMarkdown(int m) {
+	if (m >= price) {
+		return false;
+	}
 	markdown = m;
 	return true;
 }
