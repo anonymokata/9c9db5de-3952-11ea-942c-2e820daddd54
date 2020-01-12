@@ -11,6 +11,7 @@ private:
 	int price; //if byWeight true, represents price per pound
 		//else, represents price per unit
 	bool byWeight = false;
+	int markdown = 0;
 public:
 	Product(string, int);
 	Product(string, int, bool);
@@ -20,6 +21,8 @@ public:
 	inline void setPrice(int p) { price = p; }
 	inline bool getByWeight() const { return byWeight; }
 	inline void setByWeight(bool w) { byWeight = w; }
+	inline int getMarkdown() const { return markdown; }
+	inline void setMarkdown(int m) { markdown = m; }
 };
 
 #endif

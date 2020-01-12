@@ -35,4 +35,9 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 
 		REQUIRE(testProduct2.getByWeight() == false);
 	}
+	SECTION("setMarkdown sets the markdown member") {
+		testProduct.setMarkdown(89);
+
+		REQUIRE(testProduct.getMarkdown() == 89);
+	}
 }
