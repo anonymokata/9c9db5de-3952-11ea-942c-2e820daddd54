@@ -88,6 +88,15 @@ TEST_CASE("scanItem accepts an additional second parameter indicating the weight
 		REQUIRE(testRegister.getTotal() == tot + 199);
 		REQUIRE(res == true);
 	}
+	SECTION("scanItem increases total by the price per pound less markdown times weight scanned if markdown is set") {
+		shared_ptr<Product> prodPtr = make_shared<Product>("steak", 899, true);
+		prodPtr->setMarkdown(179);
+		testInventoryPtr->insert(prodPtr);
+		int tot = testRegister.getTotal();
+		testRegister.scanItem("steak", 204);
+
+		REQUIRE(testRegister.getTotal() == tot + (int) (720 * (204 / 100.0) + .5));
+	}
 }
 
 TEST_CASE("removeItem removes a product from the register and reduces the total by the corresponding amount", "[register]") {
