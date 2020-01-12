@@ -1,5 +1,11 @@
 #include "catch.hpp"
 #include "product.h"
+#include "special.h"
+
+#include <memory>
+
+using std::make_shared;
+using std::shared_ptr;
 
 TEST_CASE("product member variables can be accessed and assigned", "[product]") {
 	Product testProduct("cereal", 499);
@@ -49,5 +55,11 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 	}
 	SECTION("getSpecial returns nullptr if no special is currently set") {
 		REQUIRE(testProduct.getSpecial() == nullptr);
+	}
+	SECTION("assignSpecial assigns a special object to special member") {
+		shared_ptr<Special> specialPtr = make_shared<Special>(1, 1, 50);
+		testProduct.assignSpecial(specialPtr);
+
+		REQUIRE(testProduct.getSpecial() != nullptr);
 	}
 }

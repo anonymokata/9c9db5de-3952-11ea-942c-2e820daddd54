@@ -29,6 +29,7 @@ public:
 	inline int getMarkdown() const { return markdown; }
 	bool setMarkdown(int);
 	inline shared_ptr<Special> getSpecial() const { return special; }
+	inline void assignSpecial(shared_ptr<Special> s) { special = s; }
 };
 
 #endif
