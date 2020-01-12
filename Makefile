@@ -1,5 +1,5 @@
-output: test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o
-	g++ -std=c++11 -Wall -Werror test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o -o output
+output: test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o test_special.o special.o
+	g++ -std=c++11 -Wall -Werror test_main.o test_use_cases.o test_product.o product.o test_register.o register.o test_inventory.o inventory.o test_special.o special.o -o output
 
 test_main.o: test/test_main.cpp
 	g++ -std=c++11 -Wall -Werror -c test/test_main.cpp -I lib/catch2
@@ -24,6 +24,12 @@ test_inventory.o: test/test_inventory.cpp
 
 inventory.o: src/inventory.cpp
 	g++ -std=c++11 -Wall -Werror -c src/inventory.cpp -I src/
+
+test_special.o: test/test_special.cpp
+	g++ -std=c++11 -Wall -Werror -c test/test_special.cpp -I lib/catch2 -I src/
+
+special.o: src/special.cpp
+	g++ -std=c++11 -Wall -Werror -c src/special.cpp -I src/
 
 clean:
 	rm *.o output
