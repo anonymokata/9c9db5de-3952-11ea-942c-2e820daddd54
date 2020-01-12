@@ -47,4 +47,7 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 		REQUIRE(res == false);
 		REQUIRE(testProduct.getMarkdown() == 0);
 	}
+	SECTION("getSpecial returns nullptr if no special is currently set") {
+		REQUIRE(testProduct.getSpecial() == nullptr);
+	}
 }

@@ -1,9 +1,13 @@
 #ifndef _PRODUCT_H_
 #define _PRODUCT_H_
 
+#include <memory>
 #include <string>
 
+using std::shared_ptr;
 using std::string;
+
+class Special;
 
 class Product {
 private:
@@ -12,6 +16,7 @@ private:
 		//else, represents price per unit
 	bool byWeight = false;
 	int markdown = 0;
+	shared_ptr<Special> special = nullptr;
 public:
 	Product(string, int);
 	Product(string, int, bool);
@@ -23,6 +28,7 @@ public:
 	inline void setByWeight(bool w) { byWeight = w; }
 	inline int getMarkdown() const { return markdown; }
 	bool setMarkdown(int);
+	inline shared_ptr<Special> getSpecial() const { return special; }
 };
 
 #endif
