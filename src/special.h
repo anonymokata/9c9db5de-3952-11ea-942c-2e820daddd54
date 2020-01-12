@@ -7,6 +7,8 @@ private:
 	int discountQuantity = 0;
 	int discountPercentage = 0; //represents percent off, from 0 to 100
 public:
+	Special() {};
+	Special(int, int, int);
 	inline int getPurchaseQuantity() const { return purchaseQuantity; }
 	inline void setPurchaseQuantity(int p) { purchaseQuantity = p; }
 	inline int getDiscountQuantity() const { return discountQuantity; }
