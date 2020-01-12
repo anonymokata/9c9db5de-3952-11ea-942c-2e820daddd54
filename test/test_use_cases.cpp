@@ -13,6 +13,12 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	testInventoryPtr->insert(make_shared<Product>("tea", 299));
 	testInventoryPtr->insert(make_shared<Product>("chips", 185));
 	testInventoryPtr->insert(make_shared<Product>("chicken", 499, true));
+	shared_ptr<Product> testPtr = make_shared<Product>("sugar", 895);
+	testPtr->setMarkdown(125); //sugar markdown
+	testInventoryPtr->insert(testPtr);
+	testPtr = make_shared<Product>("sweet pepper", 499, true);
+	testPtr->setMarkdown(99); //sweet pepper markdown
+	testInventoryPtr->insert(testPtr);
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	
@@ -73,5 +79,12 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("attempting to remove more of a weight priced item than currently in quantity results in no change to total or quantity") {
 		REQUIRE(testRegister.getTotal() == total);
 		REQUIRE(testRegister.getQuantity("chicken") == chickenQuantity);
+	}
+
+	total = testRegister.getTotal();
+	testRegister.scanItem("sugar");
+
+	SECTION("scanning an item with a markdown increases the total by the price less the markdown") {
+		REQUIRE(testRegister.getTotal() == total + 895 - 125);
 	}
 }
