@@ -2,6 +2,7 @@
 #define _REGISTER_H_
 
 #include "inventory.h"
+#include "special.h"
 
 #include <memory>
 #include <string>
@@ -19,7 +20,7 @@ private:
 		//otherwise, stores number of units
 	shared_ptr<Inventory> productList = nullptr;
 
-	int calcPrice(int, int);
+	int calcPrice(int, int, int, shared_ptr<Special>);
 	void incTotal(int);
 	void decTotal(int);
 	void incQuantity(string, int = 0);

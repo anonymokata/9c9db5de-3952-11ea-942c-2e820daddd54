@@ -4,19 +4,6 @@ void Register::assignInventory(shared_ptr<Inventory> i) {
 	productList = i;
 }
 
-/*bool Register::scanItem(string s) {
-	if (!this->productList) {
-		return false;
-	}
-	if (this->productList->contains(s)) {
-		++quantity[s];
-		shared_ptr<Product> prodPtr = productList->retrieve(s);
-		incTotal(prodPtr->getPrice());
-		return true;
-	}
-	return false;
-}*/
-
 bool Register::scanItem(string s, int w) {
 	if (!this->productList) {
 		return false;
@@ -32,7 +19,9 @@ bool Register::scanItem(string s, int w) {
 			w = 0;
 		}
 		int price = prodPtr->getPrice() - prodPtr->getMarkdown();
-		incTotal(calcPrice(price, w));
+		int curQuantity = getQuantity(s);
+		shared_ptr<Special> special = prodPtr->getSpecial();
+		incTotal(calcPrice(price, w, curQuantity, special));
 		incQuantity(s, w);
 		return true;
 	}
@@ -57,12 +46,27 @@ bool Register::removeItem(string n, int w) {
 		w = 0;
 	}
 	int price = prodPtr->getPrice() - prodPtr->getMarkdown();
-	decTotal(calcPrice(price, w));
+	int curQuantity = getQuantity(n);
+	shared_ptr<Special> special = prodPtr->getSpecial();
+	decTotal(calcPrice(price, w, curQuantity, special));
 	decQuantity(n, w);
 	return true;
 }
 
-int Register::calcPrice(int p, int w) {
+int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
+	if (s) {
+		int purchaseQuantity = s->getPurchaseQuantity();
+		int discountQuantity = s->getDiscountQuantity();
+		int discountPercentage = s->getDiscountPercentage();
+		int totalSpecialQuantity = purchaseQuantity + discountQuantity;
+		if (q % totalSpecialQuantity >= purchaseQuantity) {
+			double discountPrice = 100 - discountPercentage;
+			discountPrice /= 100.0;
+			discountPrice *= p;
+			discountPrice += .5; //for rounding
+			p = (int) discountPrice;
+		}
+	}
 	if (w != 0) { //multiply price per pound by quantity in
 		//hundredths of a pound
 		double lbScanned = w / 100.0;

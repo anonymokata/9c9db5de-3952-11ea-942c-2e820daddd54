@@ -189,3 +189,25 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		REQUIRE(testRegister.getTotal() == tot - (int) (160 * (21 / 100.0) + .5));
 	}
 }
+
+TEST_CASE("calcPrice calculates the price correctly when the scanned item has an associated special") {
+		shared_ptr<Inventory> testInventory = make_shared<Inventory>();
+		shared_ptr<Product> prodPtr = make_shared<Product>("fish", 598);
+		shared_ptr<Special> specPtr = make_shared<Special>(1, 1, 70);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
+		Register testRegister;
+		testRegister.assignInventory(testInventory);
+
+	SECTION("scanning a product when the set amount of quantity is bought at the marked price increases the total by the price less percentage of the price denoted by the special") {
+		testRegister.scanItem("fish");
+
+		REQUIRE(testRegister.getQuantity("fish") == 1);
+		REQUIRE(testRegister.getTotal() == 598);
+
+		testRegister.scanItem("fish");
+
+		REQUIRE(testRegister.getQuantity("fish") == 2);
+		REQUIRE(testRegister.getTotal() == 598 + (int) (598 * .3 + .5));
+	}
+}
