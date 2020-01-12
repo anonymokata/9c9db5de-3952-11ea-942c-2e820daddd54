@@ -48,13 +48,18 @@ bool Register::removeItem(string n, int w) {
 	int price = prodPtr->getPrice() - prodPtr->getMarkdown();
 	int curQuantity = getQuantity(n);
 	shared_ptr<Special> special = prodPtr->getSpecial();
-	decTotal(calcPrice(price, w, curQuantity, special));
+	decTotal(calcPrice(price, w, curQuantity - 1, special));
+	//subtract one from curQuantity to calculate if the unit being removed
+	//was priced at discount
 	decQuantity(n, w);
 	return true;
 }
 
 int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 	if (s) {
+		//buy 3 get 2 free
+		//have: 5 - 1
+		//
 		int purchaseQuantity = s->getPurchaseQuantity();
 		int discountQuantity = s->getDiscountQuantity();
 		int discountPercentage = s->getDiscountPercentage();

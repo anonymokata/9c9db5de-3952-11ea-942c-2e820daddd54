@@ -243,4 +243,25 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("cereal") == 6);
 		REQUIRE(testRegister.getTotal() == 299 * 4);
 	}
+	SECTION("removing an item that was added to the register at discount reduces the total by the discounted price") {
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+
+		REQUIRE(testRegister.getTotal() == 299 * 3);
+		
+		testRegister.removeItem("cereal");
+
+		REQUIRE(testRegister.getTotal() == 299 * 3);
+
+		testRegister.removeItem("cereal");
+
+		REQUIRE(testRegister.getTotal() == 299 * 3);
+
+		testRegister.removeItem("cereal");
+
+		REQUIRE(testRegister.getTotal() == 299 * 2);
+	}
 }
