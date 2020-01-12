@@ -56,7 +56,8 @@ bool Register::removeItem(string n, int w) {
 	if (prodPtr->getByWeight() == false) {
 		w = 0;
 	}
-	decTotal(calcPrice(prodPtr->getPrice(), w));
+	int price = prodPtr->getPrice() - prodPtr->getMarkdown();
+	decTotal(calcPrice(price, w));
 	decQuantity(n, w);
 	return true;
 }

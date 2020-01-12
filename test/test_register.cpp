@@ -167,5 +167,15 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		testRegister.removeItem("watermelon", 216);
 
 		REQUIRE(testRegister.getTotal() == tot - (int) (50 * (216 / 100.0) + .5));
-	}		
+	}
+	SECTION("removeItem decreases total by price less markdown if pass product has a markdown") {
+		shared_ptr<Product> prodPtr = make_shared<Product>("eggs", 299);
+		prodPtr->setMarkdown(72);
+		testInventoryPtr->insert(prodPtr);
+		testRegister.scanItem("eggs");
+		int tot = testRegister.getTotal();
+		testRegister.removeItem("eggs");
+
+		REQUIRE(testRegister.getTotal() == tot - 227);
+	}
 }
