@@ -9,4 +9,9 @@ TEST_CASE("Special contains members which denote the details of a special applie
 
 		REQUIRE(testSpecial.getPurchaseQuantity() == 3);
 	}
+	SECTION("setDiscountQuantity sets the amount of products able to be purchased at discount after purchasing the amount equal to purchaseQuantity") {
+		testSpecial.setDiscountQuantity(2);
+
+		REQUIRE(testSpecial.getDiscountQuantity() == 2);
+	}
 }
