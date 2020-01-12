@@ -87,4 +87,11 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("scanning an item with a markdown increases the total by the price less the markdown") {
 		REQUIRE(testRegister.getTotal() == total + 895 - 125);
 	}
+
+	total = testRegister.getTotal();
+	testRegister.removeItem("sugar");
+
+	SECTION("removing an item with a markdown reduces the total by the price less the markdown") {
+		REQUIRE(testRegister.getTotal() == total - (895 - 125));
+	}
 }
