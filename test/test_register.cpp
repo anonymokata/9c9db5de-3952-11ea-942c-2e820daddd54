@@ -209,5 +209,15 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getQuantity("fish") == 2);
 		REQUIRE(testRegister.getTotal() == 598 + (int) (598 * .3 + .5));
+
+		testRegister.scanItem("fish");
+
+		REQUIRE(testRegister.getQuantity("fish") == 3);
+		REQUIRE(testRegister.getTotal() == (598 * 2) + (int) (598 * .3 + .5));
+
+		testRegister.scanItem("fish");
+
+		REQUIRE(testRegister.getQuantity("fish") == 4);
+		REQUIRE(testRegister.getTotal() == (598 * 2) + (2 * (int) (598 * .3 + .5)));
 	}
 }
