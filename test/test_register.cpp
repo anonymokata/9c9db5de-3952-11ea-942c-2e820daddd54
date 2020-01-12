@@ -231,5 +231,16 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getQuantity("cereal") == 3);
 		REQUIRE(testRegister.getTotal() == 299 * 3);
+
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+
+		REQUIRE(testRegister.getQuantity("cereal") == 5);
+		REQUIRE(testRegister.getTotal() == 299 * 3);
+		
+		testRegister.scanItem("cereal");
+
+		REQUIRE(testRegister.getQuantity("cereal") == 6);
+		REQUIRE(testRegister.getTotal() == 299 * 4);
 	}
 }
