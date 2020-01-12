@@ -31,7 +31,8 @@ bool Register::scanItem(string s, int w) {
 			//ignore weight if product not priced by weight
 			w = 0;
 		}
-		incTotal(calcPrice(prodPtr->getPrice(), w));
+		int price = prodPtr->getPrice() - prodPtr->getMarkdown();
+		incTotal(calcPrice(price, w));
 		incQuantity(s, w);
 		return true;
 	}

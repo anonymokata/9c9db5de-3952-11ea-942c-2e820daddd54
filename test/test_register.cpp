@@ -33,22 +33,27 @@ TEST_CASE("scanItem is passed a product name, increases quantity of product and 
 	SECTION("scanItem returns true if inventory object is set and product is found in inventory", "[register]") {
 		REQUIRE(testRegister.scanItem("beef") == true);
 	}
-
 	SECTION("scanItem returns false if inventory object is set and product is not found in inventory", "[register]") {
 		REQUIRE(testRegister.scanItem("chips") == false);
 	}
-
 	SECTION("scanItem increases the quantity of the product in register's quantity object if product is found in register's inventory", "[register]") {
 		testRegister.scanItem("beef");
 		
 		REQUIRE(testRegister.getQuantity("beef") == 1);
 	}
-
 	SECTION("scanItem increases the total of the register by the price of the scanned product", "[register]") {
 		int curTotal = testRegister.getTotal();
 		testRegister.scanItem("beef");
 
 		REQUIRE(testRegister.getTotal() == curTotal + 799);
+	}
+	SECTION("scanItem inceases the total of the register by the price of the scanned product less markdown when markdown is set") {
+		shared_ptr<Product> prodPtr = testRegister.getInventory()->retrieve("beef");
+		prodPtr->setMarkdown(100);
+		int curTotal = testRegister.getTotal();
+		testRegister.scanItem("beef");
+
+		REQUIRE(testRegister.getTotal() == curTotal + 699);
 	}
 }
 
@@ -97,14 +102,12 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 	
 		REQUIRE(res == false);
 	}
-
 	SECTION("removeItem returns true if passed product has a quantity above 0") {
 		testRegister.scanItem("milk");
 		bool res = testRegister.removeItem("milk");
 
 		REQUIRE(res == true);
 	}
-
 	SECTION("removeItem reduces quantity of product by 1 if product has a quantity above 0") {
 		testRegister.scanItem("milk");
 		int milkQuantity = testRegister.getQuantity("milk");
@@ -112,7 +115,6 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 
 		REQUIRE(testRegister.getQuantity("milk") == milkQuantity - 1);
 	}
-
 	SECTION("removeItem reduces total by cost of 1 unit if product has a quantity above 0") {
 		testRegister.scanItem("milk");
 		int tot = testRegister.getTotal();
@@ -120,7 +122,6 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 
 		REQUIRE(testRegister.getTotal() == tot - 799);
 	}
-
 	SECTION("removeItem ignores passed weight if passed product is not priced by weight") {
 		testRegister.scanItem("milk");
 		int milkQuantity = testRegister.getQuantity("milk");
@@ -131,14 +132,12 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 		REQUIRE(testRegister.getTotal() == tot - 799);
 		REQUIRE(res == true);
 	}
-
 	SECTION("removeItem returns false if passed product is priced by weight and no weight is passed") {
 		testRegister.scanItem("watermelon", 207);
 		bool res = testRegister.removeItem("watermelon");
 
 		REQUIRE(res == false);
 	}
-
 	SECTION("removeItem returns false if passed product is priced by weight and weight passed is greater than amount in productList") {
 		testRegister.scanItem("watermelon", 513);
 		int quant = testRegister.getQuantity("watermelon");
@@ -146,7 +145,6 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 
 		REQUIRE(res == false);
 	}
-
 	SECTION("removeItem decreases quantity of product by passed weight amount if product is priced by weight") {
 		testRegister.scanItem("watermelon", 313);
 		int quantity = testRegister.getQuantity("watermelon");
@@ -154,7 +152,6 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 
 		REQUIRE(testRegister.getQuantity("watermelon") == quantity - 107);
 	}
-
 	SECTION("removeItem decreases total by adjusted price if passed product is priced by weight and a weight amount is passed") {
 		testRegister.scanItem("watermelon", 509);
 		int tot = testRegister.getTotal();
