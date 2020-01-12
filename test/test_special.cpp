@@ -14,4 +14,20 @@ TEST_CASE("Special contains members which denote the details of a special applie
 
 		REQUIRE(testSpecial.getDiscountQuantity() == 2);
 	}
+	SECTION("setDiscountPercentage sets the percent (as a 0-precision int) off the marked price that discounted items are purchased at") {
+		testSpecial.setDiscountPercentage(50);
+		
+		REQUIRE(testSpecial.getDiscountPercentage() == 50);
+	}
+	SECTION("setDiscountPercentage checks the input for bounds of 0 and 100 inclusive and returns false without setting member if input is out of bounds") {
+		bool res = testSpecial.setDiscountPercentage(777);
+
+		REQUIRE(res == false);
+		REQUIRE(testSpecial.getDiscountPercentage() == 0);
+
+		res = testSpecial.setDiscountPercentage(-25);
+
+		REQUIRE(res == false);
+		REQUIRE(testSpecial.getDiscountPercentage() == 0);
+	}
 }
