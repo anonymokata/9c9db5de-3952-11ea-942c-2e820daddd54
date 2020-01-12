@@ -196,6 +196,10 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		shared_ptr<Special> specPtr = make_shared<Special>(1, 1, 70);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
+		prodPtr = make_shared<Product>("cereal", 299);
+		specPtr = make_shared<Special>(3, 2, 100);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
 		Register testRegister;
 		testRegister.assignInventory(testInventory);
 
@@ -219,5 +223,13 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getQuantity("fish") == 4);
 		REQUIRE(testRegister.getTotal() == (598 * 2) + (2 * (int) (598 * .3 + .5)));
+	}
+	SECTION("scanning a product when the set quantity to purchase at full price is in the register results in the total being increased by the discounted amount for the amount set as the discountQuantity in the associated special object") {
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+		testRegister.scanItem("cereal");
+
+		REQUIRE(testRegister.getQuantity("cereal") == 3);
+		REQUIRE(testRegister.getTotal() == 299 * 3);
 	}
 }
