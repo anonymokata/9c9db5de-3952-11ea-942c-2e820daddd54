@@ -403,4 +403,13 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getTotal() == ((int) (500 * (400 / 100.0) + .5)) + ((int) (500 * (200 / 100.0) * (25 / 100.0) + .5)));
 	}
+	SECTION("removing an item priced by weight correctly decreases the total based on the special and quantity limit which may be invalidated") {
+		testRegister.scanItem("shrimp", 600);
+
+		REQUIRE(testRegister.getTotal() == 2250);
+
+		testRegister.removeItem("shrimp", 300);
+
+		REQUIRE(testRegister.getTotal() == 1125);
+	}
 }
