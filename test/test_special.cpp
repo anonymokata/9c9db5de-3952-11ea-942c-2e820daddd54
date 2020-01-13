@@ -30,7 +30,7 @@ TEST_CASE("SpecialBogo is a type of Special which contains members which denote 
 		REQUIRE(res == false);
 		REQUIRE(testSpecial.getDiscountPercentage() == 0);
 	}
-	SECTION("parameterized constructor for special takes purchaseQuantity, discountQuantity, and discountPercentage") {
+	SECTION("parameterized constructor for specialbogo takes purchaseQuantity, discountQuantity, and discountPercentage") {
 		SpecialBogo testSpecial2(5, 1, 100);
 
 		REQUIRE(testSpecial2.getPurchaseQuantity() == 5);
@@ -51,5 +51,11 @@ TEST_CASE("SpecialBulk is a type of Special which contains members which denote 
 		testSpecial.setDiscountPrice(500);
 
 		REQUIRE(testSpecial.getDiscountPrice() == 500);
+	}
+	SECTION("parameterized constructor exists for specialbulk") {
+		SpecialBulk testSpecial2(5, 999);
+
+		REQUIRE(testSpecial2.getPurchaseQuantity() == 5);
+		REQUIRE(testSpecial2.getDiscountPrice() == 999);
 	}
 }
