@@ -200,10 +200,14 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		specPtr = make_shared<SpecialBogo>(3, 2, 100);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
+		prodPtr = make_shared<Product>("coke", 499);
+		specPtr = make_shared<SpecialBulk>(4, 1200);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
 		Register testRegister;
 		testRegister.assignInventory(testInventory);
 
-	SECTION("scanning a product when the set amount of quantity is bought at the marked price increases the total by the price less percentage of the price denoted by the special") {
+	SECTION("scanning a product with a special bogo set when the set amount of quantity is bought at the marked price increases the total by the price less percentage of the price denoted by the special") {
 		testRegister.scanItem("fish");
 
 		REQUIRE(testRegister.getQuantity("fish") == 1);
@@ -224,7 +228,7 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("fish") == 4);
 		REQUIRE(testRegister.getTotal() == (598 * 2) + (2 * (int) (598 * .3 + .5)));
 	}
-	SECTION("scanning a product when the set quantity to purchase at full price is in the register results in the total being increased by the discounted amount for the amount set as the discountQuantity in the associated special object") {
+	SECTION("scanning a product with a specialbogo set when the set quantity to purchase at full price is in the register results in the total being increased by the discounted amount for the amount set as the discountQuantity in the associated special object") {
 		testRegister.scanItem("cereal");
 		testRegister.scanItem("cereal");
 		testRegister.scanItem("cereal");
@@ -243,7 +247,7 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("cereal") == 6);
 		REQUIRE(testRegister.getTotal() == 299 * 4);
 	}
-	SECTION("removing an item that was added to the register at discount reduces the total by the discounted price") {
+	SECTION("removing an item with a set specialbogo that was added to the register at discount reduces the total by the discounted price") {
 		testRegister.scanItem("cereal");
 		testRegister.scanItem("cereal");
 		testRegister.scanItem("cereal");
@@ -263,5 +267,18 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		testRegister.removeItem("cereal");
 
 		REQUIRE(testRegister.getTotal() == 299 * 2);
+	}
+	SECTION("scanning a product with a specialbulk set adjusts the total to the noted special price when the set quantity of a product is a scanned") {
+		testRegister.scanItem("coke");
+		testRegister.scanItem("coke");
+		testRegister.scanItem("coke");
+
+		REQUIRE(testRegister.getQuantity("coke") == 3);
+		REQUIRE(testRegister.getTotal() == 499 * 3);
+
+		testRegister.scanItem("coke");
+
+		REQUIRE(testRegister.getQuantity("coke") == 4);
+		REQUIRE(testRegister.getTotal() == 1200);
 	}
 }

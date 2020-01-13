@@ -56,7 +56,7 @@ bool Register::removeItem(string n, int w) {
 }
 
 int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
-	if (s) {
+	if (s && s->getSpecialType() == "BOGO") {
 		//buy 3 get 2 free
 		//have: 5 - 1
 		//
@@ -70,6 +70,13 @@ int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 			discountPrice *= p;
 			discountPrice += .5; //for rounding
 			p = (int) discountPrice;
+		}
+	}
+	else if (s && s->getSpecialType() == "BULK") {
+		int purchaseQuantity = s->getPurchaseQuantity();
+		int discountPrice = s->getDiscountPrice();
+		if (q % purchaseQuantity == purchaseQuantity - 1) {
+			p = discountPrice - (p * (purchaseQuantity - 1));
 		}
 	}
 	if (w != 0) { //multiply price per pound by quantity in
