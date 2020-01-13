@@ -56,10 +56,28 @@ bool Register::removeItem(string n, int w) {
 }
 
 int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
-	if (s && (q < s->getLimit() || s->getLimit() == 0) && s->getSpecialType() == "BOGO") {
-		//buy 3 get 2 free
-		//have: 5 - 1
-		//
+	if (w && s) { //special for weighted item
+		//identify total after scanning
+		//calculate how many complete specials there are
+		//add remainder as full price
+		int purchaseQuantity = s->getPurchaseQuantity(); //200
+		int discountQuantity = s->getDiscountQuantity(); //100
+		int discountPercentage = s->getDiscountPercentage(); //50
+		int totalSpecialQuantity = purchaseQuantity + discountQuantity; //300
+		int discountPrice = (int) (p * ((100 - discountPercentage) / 100.0) + .5); //cents per lb
+		int price = 0;
+		int fullCycles = w / totalSpecialQuantity; //1
+		w = w % totalSpecialQuantity; //0
+		price += ((int) ((fullCycles * discountPrice * discountQuantity / 100.0) + (fullCycles * p * purchaseQuantity / 100.0) + .5));
+		int margin = q % totalSpecialQuantity;
+		if (w > margin) {
+			price += ((int) ((w - margin) / 100.0 + .5) * discountPrice);
+			w = margin;
+		}
+		price += ((int) (w / 100.0 + .5)) * p;
+		p = price;
+	}
+	else if (s && (q < s->getLimit() || s->getLimit() == 0) && s->getSpecialType() == "BOGO") {
 		int purchaseQuantity = s->getPurchaseQuantity();
 		int discountQuantity = s->getDiscountQuantity();
 		int discountPercentage = s->getDiscountPercentage();
@@ -79,7 +97,7 @@ int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 			p = discountPrice - (p * (purchaseQuantity - 1));
 		}
 	}
-	if (w != 0) { //multiply price per pound by quantity in
+	else if (w != 0) { //multiply price per pound by quantity in
 		//hundredths of a pound
 		double lbScanned = w / 100.0;
 		double cost = lbScanned * p;

@@ -212,6 +212,10 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		specPtr = make_shared<SpecialBogo>(3, 1, 100, 4);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
+		prodPtr = make_shared<Product>("bacon", 700, true);
+		specPtr = make_shared<SpecialBogo>(200, 100, 50);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
 		Register testRegister;
 		testRegister.assignInventory(testInventory);
 
@@ -371,5 +375,10 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		testRegister.removeItem("bread");
 
 		REQUIRE(testRegister.getTotal() == 470);
+	}
+	SECTION("scanning an item priced by weight correctly increases the total based on the special") {
+		testRegister.scanItem("bacon", 300);
+
+		REQUIRE(testRegister.getTotal() == 1750);
 	}
 }
