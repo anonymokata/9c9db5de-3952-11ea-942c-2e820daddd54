@@ -48,7 +48,11 @@ bool Register::removeItem(string n, int w) {
 	int price = prodPtr->getPrice() - prodPtr->getMarkdown();
 	int curQuantity = getQuantity(n);
 	shared_ptr<Special> special = prodPtr->getSpecial();
-	decTotal(calcPrice(price, w, curQuantity - 1, special));
+	int dec = 1;
+	if (w != 0) {
+		dec = w;
+	}
+	decTotal(calcPrice(price, w, curQuantity - dec, special));
 	//subtract one from curQuantity to calculate if the unit being removed
 	//was priced at discount
 	decQuantity(n, w);
@@ -66,15 +70,27 @@ int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 		int totalSpecialQuantity = purchaseQuantity + discountQuantity; //300
 		int discountPrice = (int) (p * ((100 - discountPercentage) / 100.0) + .5); //cents per lb
 		int price = 0;
-		int fullCycles = w / totalSpecialQuantity; //1
-		w = w % totalSpecialQuantity; //0
+		int fullCycles = w / totalSpecialQuantity; //0
+		w = w % totalSpecialQuantity; //150
 		price += ((int) ((fullCycles * discountPrice * discountQuantity / 100.0) + (fullCycles * p * purchaseQuantity / 100.0) + .5));
-		int margin = q % totalSpecialQuantity;
-		if (w > margin) {
+		int margin = q % totalSpecialQuantity; //0 amount of product towards next cycle
+		if (margin / purchaseQuantity) { //already in discount price
+			price += ((int) (discountPrice * (w / 100.0) + .5));
+			w = 0;
+		}
+		else { //have some way to go in marked price
+			int fullPriceQuantity = purchaseQuantity - margin;
+			fullPriceQuantity = fullPriceQuantity < w ? fullPriceQuantity : w; //check if enough weight to cover fPQ
+			w -= fullPriceQuantity;
+			price += ((int) (p * (fullPriceQuantity / 100.0) + .5));
+		}
+		//add rest as discount price
+		price += ((int) (discountPrice * (w / 100.0) + .5));
+		/*if (w > margin) {
 			price += ((int) ((w - margin) / 100.0 + .5) * discountPrice);
 			w = margin;
 		}
-		price += ((int) (w / 100.0 + .5)) * p;
+		price += ((int) (w / 100.0 + .5)) * p;*/
 		p = price;
 	}
 	else if (s && (q < s->getLimit() || s->getLimit() == 0) && s->getSpecialType() == "BOGO") {

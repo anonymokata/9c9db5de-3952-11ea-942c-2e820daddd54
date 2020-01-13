@@ -380,5 +380,14 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		testRegister.scanItem("bacon", 300);
 
 		REQUIRE(testRegister.getTotal() == 1750);
+
+		testRegister.scanItem("bacon", 150);
+
+		REQUIRE(testRegister.getTotal() == 1750 + ((int) ((150 / 100.0) * 700 + .5))); 
 	}
+	/*SECTION("removing an item priced by weight correctly decreases the total based on the special which may be invalidated") {
+		testRegister.scanItem("bacon", 450);
+
+		REQUIRE(testRegister.getTotal() == );
+	}*/
 }
