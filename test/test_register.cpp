@@ -356,4 +356,20 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("bread") == 6);
 		REQUIRE(testRegister.getTotal() == 500 + (235 * 3));
 	}
+	SECTION("removing an item with a specialbulk with a set limit adjusts the total based on whether a special is invalidated") {
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+
+		REQUIRE(testRegister.getTotal() == 735);
+
+		testRegister.removeItem("bread");
+
+		REQUIRE(testRegister.getTotal() == 500);
+
+		testRegister.removeItem("bread");
+
+		REQUIRE(testRegister.getTotal() == 470);
+	}
 }
