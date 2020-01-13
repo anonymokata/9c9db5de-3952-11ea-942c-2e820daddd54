@@ -47,4 +47,9 @@ TEST_CASE("SpecialBulk is a type of Special which contains members which denote 
 
 		REQUIRE(testSpecial.getPurchaseQuantity() == 7);
 	}
+	SECTION("setDiscountPrice sets the price applied when the set quantity of a product is scanned") {
+		testSpecial.setDiscountPrice(500);
+
+		REQUIRE(testSpecial.getDiscountPrice() == 500);
+	}
 }
