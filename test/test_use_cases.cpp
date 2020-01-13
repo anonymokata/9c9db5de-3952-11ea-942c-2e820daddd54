@@ -31,6 +31,10 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	specPtr = make_shared<SpecialBogo>(200, 100, 75);
 	testPtr->assignSpecial(specPtr);
 	testInventoryPtr->insert(testPtr);
+	testPtr = make_shared<Product>("shrimp", 700, true);
+	specPtr = make_shared<SpecialBogo>(300, 100, 50, 400);
+	testPtr->assignSpecial(specPtr);
+	testInventoryPtr->insert(testPtr);
 	Register testRegister;
 	testRegister.assignInventory(testInventoryPtr);
 	
@@ -176,5 +180,12 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 
 	SECTION("removing an item priced by weight with a buy n get m at x offer reduces the total correctly based on whether a special was invalidated") {
 		REQUIRE(testRegister.getTotal() == total - ((int) (698 * (100 / 100.0) + .5)) - ((int) (698 * (100 / 100.0) * (25 / 100.0) + .5)));
+	}
+
+	total = testRegister.getTotal();
+	testRegister.scanItem("shrimp", 500);
+
+	SECTION("scanning an item priced by weight with a buy n get m at x offer and a quantity limit increases the total correctly") {
+		REQUIRE(testRegister.getTotal() == total + 2800 + 350);
 	}
 }
