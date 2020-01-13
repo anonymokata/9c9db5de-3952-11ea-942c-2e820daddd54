@@ -1,10 +1,16 @@
 #ifndef _SPECIAL_H_
-#define _SPECIAL_H_
+#define _SPECIAL_H
+
+#include <string>
+
+using std::string;
 
 class Special {
 protected:
+	string type;
 	int purchaseQuantity;
 public:
+	inline string getSpecialType() const { return type; }
 	inline int getPurchaseQuantity() const { return purchaseQuantity; }
 	inline void setPurchaseQuantity(int p) { purchaseQuantity = p; }
 	virtual inline int getDiscountQuantity() const { return 0; }
@@ -20,7 +26,6 @@ private:
 	int discountQuantity = 0;
 	int discountPercentage = 0; //represents percent off, from 0 to 100
 public:
-	SpecialBogo() {};
 	SpecialBogo(int, int, int);
 	inline int getDiscountQuantity() const override { return discountQuantity; }
 	inline void setDiscountQuantity(int d) override { discountQuantity = d; }
@@ -32,7 +37,6 @@ class SpecialBulk : public Special {
 private:
 	int discountPrice = 0;
 public:
-	SpecialBulk() {};
 	SpecialBulk(int, int);
 	inline int getDiscountPrice() const override { return discountPrice; }
 	inline void setDiscountPrice(int d) override { discountPrice = d; }

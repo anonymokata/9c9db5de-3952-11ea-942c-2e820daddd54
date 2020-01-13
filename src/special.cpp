@@ -1,6 +1,7 @@
 #include "special.h"
 
 SpecialBogo::SpecialBogo(int pq, int dq, int dp) {
+	type = "BOGO";
 	purchaseQuantity = pq;
 	discountQuantity = dq;
 	discountPercentage = dp;
@@ -16,6 +17,7 @@ bool SpecialBogo::setDiscountPercentage(int d) {
 }
 
 SpecialBulk::SpecialBulk(int pq, int dp) {
+	type = "BULK";
 	purchaseQuantity = pq;
 	discountPrice = dp;
 }
