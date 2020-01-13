@@ -128,4 +128,13 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("scanning an item with a buy n get m at x off special does not grant the special after the special limit quantity is reached") {
 		REQUIRE(testRegister.getTotal() == total + (299 * 2));
 	}
+
+	total = testRegister.getTotal();
+	testRegister.removeItem("cereal");
+	testRegister.removeItem("cereal");
+	testRegister.removeItem("cereal");
+
+	SECTION("removing an item with a buy n get m at x off special reduces the total based on whether or not a special was invalidated") {
+		REQUIRE(testRegister.getTotal() == total - (299 * 2 + ((int) (299 * (50 / 100.0) + .5))));
+	}
 }
