@@ -188,4 +188,11 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("scanning an item priced by weight with a buy n get m at x offer and a quantity limit increases the total correctly") {
 		REQUIRE(testRegister.getTotal() == total + 2800 + 350);
 	}
+
+	total = testRegister.getTotal();
+	testRegister.removeItem("shrimp", 300);
+
+	SECTION("removing an item priced by weight with a buy n get m at x offer and a quantity limit decreases the total correctly") {
+		REQUIRE(testRegister.getTotal() == total - 1750);
+	}
 }
