@@ -150,4 +150,13 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	SECTION("scanning an item with a buy n at x offer grants the special when the specified quantity is scanned in") {
 		REQUIRE(testRegister.getTotal() == total + (1200));
 	}
+
+	total = testRegister.getTotal();
+	testRegister.scanItem("coke");
+	testRegister.scanItem("coke");
+	testRegister.scanItem("coke");
+
+	SECTION("scanning an item with a buy n at x offer does not grant the special after the quantity limit is reached") {
+		REQUIRE(testRegister.getTotal() == total + (499 * 3));
+	}
 }
