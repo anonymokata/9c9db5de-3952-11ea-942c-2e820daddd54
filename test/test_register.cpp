@@ -193,11 +193,11 @@ TEST_CASE("removeItem removes a product from the register and reduces the total 
 TEST_CASE("calcPrice calculates the price correctly when the scanned item has an associated special") {
 		shared_ptr<Inventory> testInventory = make_shared<Inventory>();
 		shared_ptr<Product> prodPtr = make_shared<Product>("fish", 598);
-		shared_ptr<Special> specPtr = make_shared<Special>(1, 1, 70);
+		shared_ptr<Special> specPtr = make_shared<SpecialBogo>(1, 1, 70);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
 		prodPtr = make_shared<Product>("cereal", 299);
-		specPtr = make_shared<Special>(3, 2, 100);
+		specPtr = make_shared<SpecialBogo>(3, 2, 100);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
 		Register testRegister;

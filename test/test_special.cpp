@@ -2,7 +2,7 @@
 #include "special.h"
 
 TEST_CASE("Special contains members which denote the details of a special applied to a product") {
-	Special testSpecial;
+	SpecialBogo testSpecial;
 	
 	SECTION("setPurchaseQuantity sets the amount of products required to be purchased at full price") {
 		testSpecial.setPurchaseQuantity(3);
@@ -31,7 +31,7 @@ TEST_CASE("Special contains members which denote the details of a special applie
 		REQUIRE(testSpecial.getDiscountPercentage() == 0);
 	}
 	SECTION("parameterized constructor for special takes purchaseQuantity, discountQuantity, and discountPercentage") {
-		Special testSpecial2(5, 1, 100);
+		SpecialBogo testSpecial2(5, 1, 100);
 
 		REQUIRE(testSpecial2.getPurchaseQuantity() == 5);
 		REQUIRE(testSpecial2.getDiscountQuantity() == 1);

@@ -1,12 +1,12 @@
 #include "special.h"
 
-Special::Special(int p, int dq, int dp) {
-	purchaseQuantity = p;
+SpecialBogo::SpecialBogo(int pq, int dq, int dp) {
+	purchaseQuantity = pq;
 	discountQuantity = dq;
 	discountPercentage = dp;
 }
 
-bool Special::setDiscountPercentage(int d) {
+bool SpecialBogo::setDiscountPercentage(int d) {
 	if (d > 100 || d < 0) {
 		return false;
 	}
@@ -14,3 +14,8 @@ bool Special::setDiscountPercentage(int d) {
 
 	return true;
 }
+
+/*SpecialBulk::SpecialBulk(int pq, int dp) {
+	purchaseQuantity = pq;
+	discountPrice = dp;
+}*/

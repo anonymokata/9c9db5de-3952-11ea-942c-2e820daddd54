@@ -57,7 +57,7 @@ TEST_CASE("product member variables can be accessed and assigned", "[product]") 
 		REQUIRE(testProduct.getSpecial() == nullptr);
 	}
 	SECTION("assignSpecial assigns a special object to special member") {
-		shared_ptr<Special> specialPtr = make_shared<Special>(1, 1, 50);
+		shared_ptr<Special> specialPtr = make_shared<SpecialBogo>(1, 1, 50);
 		testProduct.assignSpecial(specialPtr);
 
 		REQUIRE(testProduct.getSpecial() != nullptr);
