@@ -204,6 +204,14 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		specPtr = make_shared<SpecialBulk>(4, 1200);
 		prodPtr->assignSpecial(specPtr);
 		testInventory->insert(prodPtr);
+		prodPtr = make_shared<Product>("bread", 235);
+		specPtr = make_shared<SpecialBulk>(3, 500, 3);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
+		prodPtr = make_shared<Product>("cheese", 199);
+		specPtr = make_shared<SpecialBogo>(3, 1, 100, 4);
+		prodPtr->assignSpecial(specPtr);
+		testInventory->insert(prodPtr);
 		Register testRegister;
 		testRegister.assignInventory(testInventory);
 
@@ -268,6 +276,23 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getTotal() == 299 * 2);
 	}
+	SECTION("scanning an item with a specialbogo with a quantity over the special limit does not trigger the special price") {
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+
+		REQUIRE(testRegister.getQuantity("cheese") == 4);
+		REQUIRE(testRegister.getTotal() == 3 * 199);
+
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+
+		REQUIRE(testRegister.getQuantity("cheese") == 8);
+		REQUIRE(testRegister.getTotal() == 7 * 199);
+	}
 	SECTION("scanning a product with a specialbulk set adjusts the total to the noted special price when the set quantity of a product is a scanned") {
 		testRegister.scanItem("coke");
 		testRegister.scanItem("coke");
@@ -294,5 +319,20 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getQuantity("coke") == 3);
 		REQUIRE(testRegister.getTotal() == 499 * 3);
+	}
+	SECTION("scanning an item with a special with a quantity over the limit value does not trigger the special bulk price") {
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+
+		REQUIRE(testRegister.getQuantity("bread") == 3);
+		REQUIRE(testRegister.getTotal() == 500);
+
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+		testRegister.scanItem("bread");
+
+		REQUIRE(testRegister.getQuantity("bread") == 6);
+		REQUIRE(testRegister.getTotal() == 500 + (235 * 3));
 	}
 }
