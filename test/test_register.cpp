@@ -293,6 +293,27 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("cheese") == 8);
 		REQUIRE(testRegister.getTotal() == 7 * 199);
 	}
+	SECTION("removing a product with a specialbogo set with limit adjusts the total appropriately depending on whether a special is invalidated") {
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+		testRegister.scanItem("cheese");
+
+		REQUIRE(testRegister.getTotal() == 4 * 199);
+
+		testRegister.removeItem("cheese");
+
+		REQUIRE(testRegister.getTotal() == 3 * 199);
+
+		testRegister.removeItem("cheese");
+
+		REQUIRE(testRegister.getTotal() == 3 * 199);
+
+		testRegister.removeItem("cheese");
+
+		REQUIRE(testRegister.getTotal() == 2 * 199);
+	}
 	SECTION("scanning a product with a specialbulk set adjusts the total to the noted special price when the set quantity of a product is a scanned") {
 		testRegister.scanItem("coke");
 		testRegister.scanItem("coke");
