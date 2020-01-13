@@ -15,7 +15,7 @@ bool SpecialBogo::setDiscountPercentage(int d) {
 	return true;
 }
 
-/*SpecialBulk::SpecialBulk(int pq, int dp) {
+SpecialBulk::SpecialBulk(int pq, int dp) {
 	purchaseQuantity = pq;
 	discountPrice = dp;
-}*/
+}

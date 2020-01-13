@@ -11,6 +11,8 @@ public:
 	virtual inline void setDiscountQuantity(int) { }
 	virtual inline int getDiscountPercentage() const { return 0; }
 	virtual inline bool setDiscountPercentage(int) { return false; }
+	virtual inline int getDiscountPrice() const { return 0; }
+	virtual inline void setDiscountPrice(int) { }
 };
 
 class SpecialBogo : public Special {
@@ -26,13 +28,14 @@ public:
 	bool setDiscountPercentage(int) override;
 };
 
-/*class SpecialBulk {
+class SpecialBulk : public Special {
 private:
 	int discountPrice = 0;
 public:
+	SpecialBulk() {};
 	SpecialBulk(int, int);
-	inline int getDiscountPrice() const { return discountPrice; }
-	inline void setDiscountPrice(int d) { discountPrice = d; }
-};*/
+	inline int getDiscountPrice() const override { return discountPrice; }
+	inline void setDiscountPrice(int d) override { discountPrice = d; }
+};
 
 #endif

@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "special.h"
 
-TEST_CASE("Special contains members which denote the details of a special applied to a product") {
+TEST_CASE("SpecialBogo is a type of Special which contains members which denote the details of a special applied to a product in the form of buy N items, get M at X off") {
 	SpecialBogo testSpecial;
 	
 	SECTION("setPurchaseQuantity sets the amount of products required to be purchased at full price") {
@@ -37,4 +37,14 @@ TEST_CASE("Special contains members which denote the details of a special applie
 		REQUIRE(testSpecial2.getDiscountQuantity() == 1);
 		REQUIRE(testSpecial2.getDiscountPercentage() == 100);
 		}
+}
+
+TEST_CASE("SpecialBulk is a type of Special which contains members which denote the details of a special applied to a product in the form of buy N items for X") {
+	SpecialBulk testSpecial;
+
+	SECTION("setPurchaseQuantity sets the number of products required to be bought for the special rate to apply") {
+		testSpecial.setPurchaseQuantity(7);
+
+		REQUIRE(testSpecial.getPurchaseQuantity() == 7);
+	}
 }
