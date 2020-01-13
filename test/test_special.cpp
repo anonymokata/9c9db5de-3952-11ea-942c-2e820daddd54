@@ -41,6 +41,11 @@ TEST_CASE("SpecialBogo is a type of Special which contains members which denote 
 	SECTION("getSpecialType returns BOGO when called on a SpecialBogo object") {
 		REQUIRE(testSpecial.getSpecialType() == "BOGO");
 	}
+	SECTION("setLimit sets a limit on quantity of products able to qualify for the special price") {
+		testSpecial.setLimit(6);
+
+		REQUIRE(testSpecial.getLimit() == 6);
+	}
 }
 
 TEST_CASE("SpecialBulk is a type of Special which contains members which denote the details of a special applied to a product in the form of buy N items for X") {
