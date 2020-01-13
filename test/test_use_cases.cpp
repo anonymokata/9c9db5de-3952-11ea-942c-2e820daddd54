@@ -167,7 +167,14 @@ TEST_CASE("after configuring an inventory with products, a register repeatedly a
 	total = testRegister.getTotal();
 	testRegister.scanItem("beef", 400);
 
-	SECTION("scanning an item priced buy weight with a buy n get m at x offer grants the special on the qualifying quantity") {
+	SECTION("scanning an item priced by weight with a buy n get m at x offer grants the special on the qualifying quantity") {
 		REQUIRE(testRegister.getTotal() == total + ((int) (698 * (300 / 100.0))) + ((int) (698 * (25 / 100.0) * (100 / 100.0) + .5)));
+	}
+
+	total = testRegister.getTotal();
+	testRegister.removeItem("beef", 200);
+
+	SECTION("removing an item priced by weight with a buy n get m at x offer reduces the total correctly based on whether a special was invalidated") {
+		REQUIRE(testRegister.getTotal() == total - ((int) (698 * (100 / 100.0) + .5)) - ((int) (698 * (100 / 100.0) * (25 / 100.0) + .5)));
 	}
 }
