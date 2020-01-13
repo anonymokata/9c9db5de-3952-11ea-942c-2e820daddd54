@@ -59,6 +59,13 @@ bool Register::removeItem(string n, int w) {
 }
 
 int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
+	int total = 0;
+	int overLimit = 0; //used for weight priced specials
+	if (w && s && s->getLimit() != 0) {
+		overLimit = w + q - s->getLimit();
+		overLimit = overLimit > 0 ? overLimit : 0;
+		w -= overLimit;
+	}
 	if (w && s) { //special for weighted item
 		int purchaseQuantity = s->getPurchaseQuantity();
 		int discountQuantity = s->getDiscountQuantity();
@@ -84,7 +91,8 @@ int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 			price += ((int) (p * (fullPriceQuantity / 100.0) + .5));
 			price += ((int) (discountPrice * (w / 100.0) + .5)); //dump rest into disc price
 		}
-		p = price;
+		w = overLimit;
+		total = price;
 	}
 	else if (s && (q < s->getLimit() || s->getLimit() == 0) && s->getSpecialType() == "BOGO") {
 		int purchaseQuantity = s->getPurchaseQuantity();
@@ -106,12 +114,15 @@ int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 			p = discountPrice - (p * (purchaseQuantity - 1));
 		}
 	}
-	else if (w != 0) { //multiply price per pound by quantity in
+	if (w != 0) { //multiply price per pound by quantity in
 		//hundredths of a pound
 		double lbScanned = w / 100.0;
 		double cost = lbScanned * p;
 		cost += .5; //for rounding
-		p = (int) cost;
+		total += (int) cost;
+	}
+	if (total) { //for weight priced items
+		p = total;
 	}
 	return p;
 }
