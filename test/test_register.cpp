@@ -385,9 +385,13 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 
 		REQUIRE(testRegister.getTotal() == 1750 + ((int) ((150 / 100.0) * 700 + .5))); 
 	}
-	/*SECTION("removing an item priced by weight correctly decreases the total based on the special which may be invalidated") {
+	SECTION("removing an item priced by weight correctly decreases the total based on the special which may be invalidated") {
 		testRegister.scanItem("bacon", 450);
 
-		REQUIRE(testRegister.getTotal() == );
-	}*/
+		REQUIRE(testRegister.getTotal() == ((int) (700 * (350 / 100.0) + .5)) + ((int) (350 * (100 / 100.0) + .5)));
+
+		testRegister.removeItem("bacon", 200);
+
+		REQUIRE(testRegister.getTotal() == 1575);
+	}
 }

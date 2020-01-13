@@ -49,43 +49,44 @@ bool Register::removeItem(string n, int w) {
 	int curQuantity = getQuantity(n);
 	shared_ptr<Special> special = prodPtr->getSpecial();
 	int dec = 1;
-	if (w != 0) {
+	if (w != 0) { //amount to decrement from the current quantity to account for weight priced specials
 		dec = w;
 	}
 	decTotal(calcPrice(price, w, curQuantity - dec, special));
-	//subtract one from curQuantity to calculate if the unit being removed
-	//was priced at discount
+	//subtract the amount of product being removed from curQuantity to calculate if the unit being removed was priced at discount
 	decQuantity(n, w);
 	return true;
 }
 
 int Register::calcPrice(int p, int w, int q, shared_ptr<Special> s) {
 	if (w && s) { //special for weighted item
-		//identify total after scanning
-		//calculate how many complete specials there are
-		//add remainder as full price
+		//450 -> 250 --- rem 150 full, 50 disc
 		int purchaseQuantity = s->getPurchaseQuantity(); //200
 		int discountQuantity = s->getDiscountQuantity(); //100
 		int discountPercentage = s->getDiscountPercentage(); //50
-		int totalSpecialQuantity = purchaseQuantity + discountQuantity; //300
+		int totalSpecialQuantity = purchaseQuantity + discountQuantity;
 		int discountPrice = (int) (p * ((100 - discountPercentage) / 100.0) + .5); //cents per lb
 		int price = 0;
 		int fullCycles = w / totalSpecialQuantity; //0
-		w = w % totalSpecialQuantity; //150
+		w = w % totalSpecialQuantity; //200
 		price += ((int) ((fullCycles * discountPrice * discountQuantity / 100.0) + (fullCycles * p * purchaseQuantity / 100.0) + .5));
-		int margin = q % totalSpecialQuantity; //0 amount of product towards next cycle
+		int margin = q % totalSpecialQuantity; //250 amount of product towards next cycle previously scanned
 		if (margin / purchaseQuantity) { //already in discount price
-			price += ((int) (discountPrice * (w / 100.0) + .5));
-			w = 0;
+			int discPriceQuantity = totalSpecialQuantity - margin;
+			discPriceQuantity = discPriceQuantity < w ? discPriceQuantity : w;
+			price += ((int) (discountPrice * (discPriceQuantity / 100.0) + .5));
+			w -= discPriceQuantity;
+			price += ((int) (p * (w / 100.0) + .5)); //dump rest into full price
 		}
-		else { //have some way to go in marked price
+		else { //have some way to go in full price
 			int fullPriceQuantity = purchaseQuantity - margin;
 			fullPriceQuantity = fullPriceQuantity < w ? fullPriceQuantity : w; //check if enough weight to cover fPQ
 			w -= fullPriceQuantity;
 			price += ((int) (p * (fullPriceQuantity / 100.0) + .5));
+			price += ((int) (discountPrice * (w / 100.0) + .5)); //dump rest into disc price
 		}
 		//add rest as discount price
-		price += ((int) (discountPrice * (w / 100.0) + .5));
+		//price += ((int) (discountPrice * (w / 100.0) + .5));
 		/*if (w > margin) {
 			price += ((int) ((w - margin) / 100.0 + .5) * discountPrice);
 			w = margin;
