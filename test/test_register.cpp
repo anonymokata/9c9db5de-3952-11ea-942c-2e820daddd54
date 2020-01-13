@@ -281,4 +281,18 @@ TEST_CASE("calcPrice calculates the price correctly when the scanned item has an
 		REQUIRE(testRegister.getQuantity("coke") == 4);
 		REQUIRE(testRegister.getTotal() == 1200);
 	}
+	SECTION("removing a product with a specialbulk set adjusts the total based on the special price if the change in quantity alters the qualifying special") {
+		testRegister.scanItem("coke");
+		testRegister.scanItem("coke");
+		testRegister.scanItem("coke");
+		testRegister.scanItem("coke");
+
+		REQUIRE(testRegister.getQuantity("coke") == 4);
+		REQUIRE(testRegister.getTotal() == 1200);
+
+		testRegister.removeItem("coke");
+
+		REQUIRE(testRegister.getQuantity("coke") == 3);
+		REQUIRE(testRegister.getTotal() == 499 * 3);
+	}
 }
