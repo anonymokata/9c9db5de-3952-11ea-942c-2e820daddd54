@@ -1,5 +1,5 @@
 #ifndef _SPECIAL_H_
-#define _SPECIAL_H
+#define _SPECIAL_H_
 
 #include <string>
 
@@ -11,6 +11,7 @@ protected:
 	int purchaseQuantity;
 	int limit;
 public:
+	~Special() {}
 	inline string getSpecialType() const { return type; }
 	inline int getPurchaseQuantity() const { return purchaseQuantity; }
 	inline void setPurchaseQuantity(int p) { purchaseQuantity = p; }
