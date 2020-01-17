@@ -1,4 +1,4 @@
-This kata was developed on a Linux environment running the Mint 19 Cinnamon OS, version 3.8.8, and the g++ compiler, version 7.4.0
+This kata was developed on a Linux environment running the Mint 19 Cinnamon OS, version 3.8.8, and the g++ compiler, version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)
 
 The environment required to build this solution and run these tests includes a Linux environment with g++ version 7.4.0 and the ability to run makefiles.
 
